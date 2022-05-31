@@ -1,0 +1,86 @@
+<div>
+  <h2 *ngIf="poi"> {{ poi.nome }} </h2>
+  <br>
+  <a routerLink="/pois-list/" routerLinkActive="active"
+    style="text-align: center; background-color: aqua; padding: 5px; border-radius: 2px; margin: 15px 0px; text-decoration: none;">
+    Voltar a lista </a>
+</div>
+
+<mat-form-field appearance="fill">
+  <mat-label> Filter for lincense plate </mat-label>
+  <mat-select #select [formControl]="plateFilter">
+    <mat-option value="" selected> All license plates </mat-option>
+    <mat-option *ngFor="let vehicleLicense of vehicleLicensePlates" value="{{vehicleLicense}}"> {{ vehicleLicense }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label> Date </mat-label>
+  <mat-select [formControl]="dateFilter">
+    <mat-option value="" selected> No date filter </mat-option>
+    <mat-option *ngFor="let dateOption of dateOptionsToFilter" value="{{dateOption}}"> {{ dateOption }} </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let row"> {{ row.id }} </td>
+      <td mat-footer-cell *matFooterCellDef> Total </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Placa Column -->
+    <ng-container matColumnDef="placa">
+      <th mat-header-cell *matHeaderCellDef> placa </th>
+      <td mat-cell *matCellDef="let row"> {{ row.placa }} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Data Column -->
+    <ng-container matColumnDef="data">
+      <th mat-header-cell *matHeaderCellDef> data </th>
+      <td mat-cell *matCellDef="let row"> {{ row.data }} </td>
+      <td mat-footer-cell *matFooterCellDef> {{ hoursInPoi }} </td>
+    </ng-container>
+
+    <!-- Velocidade Column -->
+    <ng-container matColumnDef="velocidade">
+      <th mat-header-cell *matHeaderCellDef> velocidade </th>
+      <td mat-cell *matCellDef="let row"> {{ row.velocidade }} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+    <!-- Latitude Column -->
+    <ng-container matColumnDef="latitude">
+      <th mat-header-cell *matHeaderCellDef> latitude </th>
+      <td mat-cell *matCellDef="let row"> {{ row.latitude }} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+    <!-- Longitude Column -->
+    <ng-container matColumnDef="longitude">
+      <th mat-header-cell *matHeaderCellDef> longitude </th>
+      <td mat-cell *matCellDef="let row"> {{ row.longitude }} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+    <!-- Ignição Column -->
+    <ng-container matColumnDef="ignicao">
+      <th mat-header-cell *matHeaderCellDef> ignicao </th>
+      <td mat-cell *matCellDef="let row"> {{ row.ignicao }} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="7"> No data matching the filter "{{ select.value }}"</td>
+    </tr>
+  </table>
+
+</div>

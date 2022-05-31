@@ -1,0 +1,34 @@
+<div class="example-action-buttons">
+  <button mat-button (click)="accordion.openAll()">Expand All</button>
+  <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+</div>
+<mat-accordion class="" multi>
+
+  <mat-expansion-panel *ngFor="let poi of pois | async">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ poi.nome }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div> Raio: {{ poi.raio }} </div>
+    <div> Latitude: {{ poi.latitude }} </div>
+    <div> Longitude: {{ poi.longitude }} </div>
+
+    <a routerLink="/details-pois/{{poi.nome}}" routerLinkActive="active"
+      style="text-align: center; background-color: aqua; padding: 5px; border-radius: 2px; margin: 15px 0px; text-decoration: none;">
+      Ver detalhes </a>
+
+    <br><br><br>
+
+    <agm-map [latitude]="poi.latitude" [longitude]="poi.longitude" [zoom]="15">
+      <agm-marker [latitude]="poi.latitude" [longitude]="poi.longitude"></agm-marker>
+
+      <agm-circle [latitude]="poi.latitude" [longitude]="poi.longitude" [radius]="poi.raio" [fillColor]="'red'"
+        [circleDraggable]="false" [editable]="false">
+      </agm-circle>
+    </agm-map>
+
+  </mat-expansion-panel>
+
+</mat-accordion>
